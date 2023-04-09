@@ -6,11 +6,11 @@ export async function json(req, res) {
   }
 
   try{
-    res.body = JSON.parse(Buffer.concat(buffer).toString())
+    req.body = JSON.parse(Buffer.concat(buffer).toString())
   } catch {
-    res.body = null
+    req.body = null
   }
 
 
-  res.setHeader('Content-Type', 'application/json')
+ return res.setHeader('Content-Type', 'application/json')
 }
