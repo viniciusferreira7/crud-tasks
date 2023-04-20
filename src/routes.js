@@ -48,6 +48,7 @@ export const routes = [
     path:buildRouteParams('/tasks/:id'),
     handler: (req, res) => {
 
+      return res.writeHead(200).end()
     }
   }
 
