@@ -24,17 +24,11 @@ export const routes = [
 
       const { title, description } = req.body
 
-      const optionsDate = {
-        year:'numeric',
-        month:'2-digit',
-        day:'2-digit'
-      }
-
       const task = {
         id: randomUUID(),
         title,
         description,
-        created_at: new Date().toLocaleString('pt-BR', optionsDate).toString(),
+        created_at: new Date().toISOString().toString(),
       }
 
       database.insert('tasks',task)
