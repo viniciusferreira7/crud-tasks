@@ -42,7 +42,11 @@ export const routes = [
     path:buildRouteParams('/tasks/:id'),
     handler: (req, res) => {
 
-      return res.writeHead(200).end()
+     const { id } =  req.params 
+
+      console.log(database.delete('tasks', id))
+
+      return res.writeHead(204).end()
     }
   }
 
