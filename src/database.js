@@ -35,6 +35,7 @@ export class Database {
   }
 
   update(table, {id, ...data}){
+    let statusCode = 404
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if( rowIndex > -1 ){
@@ -45,9 +46,12 @@ export class Database {
       this.#database[table].splice(rowIndex, 1, updateTask)
       this.#persist()
 
-      return updateTask
+      statusCode = 200
+
+      return {statusCode, updateTask}
     }
 
+    return { statusCode }
 
   }
 

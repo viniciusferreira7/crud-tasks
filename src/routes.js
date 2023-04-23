@@ -44,13 +44,13 @@ export const routes = [
       const data = req.body
       const { id } = req.params
       
-     const updateTask = database.update('tasks', {
+     const { statusCode, updateTask } = database.update('tasks', {
         id,
         updated_at: new Date().toISOString().toString(),
         ...data
       } )
 
-      return res.writeHead(200).end(JSON.stringify(updateTask))
+      return res.writeHead(statusCode).end(JSON.stringify(updateTask))
     }
 
   },
