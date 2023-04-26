@@ -11,6 +11,8 @@ export const routes = [
     path:buildRouteParams('/tasks'),
     handler:(req, res) => {
 
+      console.log(req.query)
+
     const data = database.select('tasks')
     
      return res.writeHead(200).end(JSON.stringify(data))
