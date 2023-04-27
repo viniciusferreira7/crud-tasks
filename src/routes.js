@@ -32,9 +32,9 @@ export const routes = [
         created_at: new Date().toISOString().toString(),
       }
 
-      database.insert('tasks',task)
+     const { statusCode, message } = database.insert('tasks',task)
 
-      return res.writeHead(201).end()
+      return res.writeHead(statusCode).end(message)
     }
   },
 
@@ -45,13 +45,13 @@ export const routes = [
       const data = req.body
       const { id } = req.params
       
-     const { statusCode, updateTask } = database.update('tasks', {
+     const { statusCode, message } = database.update('tasks', {
         id,
         updated_at: new Date().toISOString().toString(),
         ...data
       } )
 
-      return res.writeHead(statusCode).end(JSON.stringify(updateTask))
+      return res.writeHead(statusCode).end(JSON.stringify(message))
     }
 
   },
