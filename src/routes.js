@@ -10,10 +10,9 @@ export const routes = [
     method: 'GET',
     path:buildRouteParams('/tasks'),
     handler:(req, res) => {
+      
 
-      console.log(req.query)
-
-    const data = database.select('tasks')
+    const data = database.select('tasks',req.query)
     
      return res.writeHead(200).end(JSON.stringify(data))
     }
