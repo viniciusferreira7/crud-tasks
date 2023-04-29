@@ -23,6 +23,13 @@ export const routes = [
     path:buildRouteParams('/tasks'),
     handler:(req, res) => {
 
+      
+      const message = database.validationKey(req.body, [ 'title', 'description' ])
+      
+      if(message) {
+        return res.writeHead(400).end(JSON.stringify({message}))
+      }
+
       const { title, description } = req.body
 
       const task = {
@@ -32,9 +39,9 @@ export const routes = [
         created_at: new Date().toISOString().toString(),
       }
 
-     const { statusCode, message } = database.insert('tasks',task)
+     database.insert('tasks', task)
 
-      return res.writeHead(statusCode).end(message)
+      return res.writeHead(201).end()
     }
   },
 

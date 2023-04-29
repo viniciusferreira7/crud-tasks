@@ -19,22 +19,8 @@ export class Database {
   }
 
   insert(table, data){
-    let statusCode = 400
-    let message = ''
-    const missingFromBody = this.#validationKey(data, ['title','description'])
 
-    const oneKey = missingFromBody.length === 1 && missingFromBody[0]
-
-    let error = {
-      1: `Está faltando o campo ${oneKey}`,
-      2: 'Está faltando o campo title e description'
-    }
-
-    message = error[missingKeys.length]
-    console.log(  )
-      
     if(Array.isArray(this.#database[table])){
-      statusCode = 201
       this.#database[table].push(data)
 
     } else {
@@ -43,7 +29,6 @@ export class Database {
     }
 
     this.#persist()
-    return {statusCode}
   }
 
   select(table, search){
@@ -95,18 +80,27 @@ export class Database {
    this.#persist()
   }
 
-  #validationKey(data, key ){
-    let missingKeys = []
-    
-    const expectedKeys = data
+  validationKey(data, keysCannotBeMissing ){
 
-    for(let key in expectedKeys ){
-      if(!data.hasOwnProperty(key)){
-       missingKeys.push(key)
-      }
+    const keyOfData = Object.keys(data)
+
+    let missingKeys = []
+
+    
+    keysCannotBeMissing.map(key => {
+      if(!keyOfData.includes(key)) {
+        missingKeys.push(key)
+      } 
+      
+      return key
+    })
+
+    const message = `Campo obrigatório: ${missingKeys}`
+    
+    if(missingKeys.length >= 1){
+        return message
     }
 
-    return missingKeys
   }
 
 }
