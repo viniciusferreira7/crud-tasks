@@ -58,7 +58,7 @@ export const routes = [
         ...data
       } )
 
-      return res.writeHead(statusCode).end(JSON.stringify(message))
+      return res.writeHead(statusCode).end(JSON.stringify({message}))
     }
 
   },
@@ -73,6 +73,22 @@ export const routes = [
       database.delete('tasks', id)
 
       return res.writeHead(204).end()
+    }
+  }, {
+    method: 'PATCH',
+    path:buildRouteParams('/tasks/:id/complete'),
+    handler: (req, res) => {
+
+      const { id } = req.params
+
+      const {message } = database.complete('tasks', id)
+
+      if(message) {
+
+        return res.writeHead(404).end(JSON.stringify({message}))
+      }
+
+      return res.writeHead(200).end()
     }
   }
 

@@ -45,6 +45,21 @@ export class Database {
 
   }
 
+  complete(table, id){
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
+
+    if(rowIndex > -1){
+      const task = this.#database[table].slice(rowIndex, 1)
+      const completedTask = {...task[0], completed: true}
+
+      this.#database[table].splice(rowIndex, 1, completedTask)
+      
+      this.#persist()
+    }
+
+    return { message: 'Esse registro não existe'}
+  }
+
   update(table, {id, ...data}){
     let statusCode = 404
     let message = 'Esse registro não existe'
