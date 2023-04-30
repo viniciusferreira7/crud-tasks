@@ -52,13 +52,18 @@ export const routes = [
       const data = req.body
       const { id } = req.params
       
-     const { statusCode, message } = database.update('tasks', {
+     const message = database.update('tasks', {
         id,
         updated_at: new Date().toISOString().toString(),
         ...data
       } )
 
-      return res.writeHead(statusCode).end(JSON.stringify({message}))
+
+      if(message){
+        return res.writeHead(404).end(JSON.stringify({message}))
+      }
+
+      return res.writeHead(200).end()
     }
 
   },
@@ -81,10 +86,9 @@ export const routes = [
 
       const { id } = req.params
 
-      const {message } = database.complete('tasks', id)
+      const message = database.complete('tasks', id)
 
       if(message) {
-
         return res.writeHead(404).end(JSON.stringify({message}))
       }
 

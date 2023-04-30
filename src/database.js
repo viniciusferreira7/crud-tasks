@@ -24,7 +24,6 @@ export class Database {
       this.#database[table].push(data)
 
     } else {
-      statusCode = 201
       this.#database[table] = [data]
     }
 
@@ -48,40 +47,37 @@ export class Database {
   complete(table, id){
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
-    if(rowIndex > -1){
+    const message = this.#validateId(table, id)
+
+    if(!message){
       const task = this.#database[table].slice(rowIndex, 1)
       const completedTask = {...task[0], completed: true}
-
+  
       this.#database[table].splice(rowIndex, 1, completedTask)
       
       this.#persist()
+    } else {
+      return message
     }
 
-    return { message: 'Esse registro não existe'}
   }
 
   update(table, {id, ...data}){
-    let statusCode = 404
-    let message = 'Esse registro não existe'
-
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
-    if( rowIndex > -1 ){
-    
-      const data = this.#database[table].slice(rowIndex, 1)
-      const updateData = {...data[0], ...data}
+    const message = this.#validateId(table, id)
 
-      message = updateData
+    if(!message){
+    
+      const oldTask = this.#database[table].slice(rowIndex, 1)
+      const updateData = {...oldTask[0], ...data}
 
       this.#database[table].splice(rowIndex, 1, updateData)
       this.#persist()
 
-      statusCode = 200
-
-      return {statusCode, message}
+    } else {
+      return message
     }
-
-    return { statusCode, message }
 
   }
 
@@ -116,6 +112,16 @@ export class Database {
         return message
     }
 
+  }
+
+  #validateId(table, id){
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
+
+    let message = 'Esse registro não existe'
+
+    if(rowIndex === -1){
+      return message
+    }
   }
 
 }
