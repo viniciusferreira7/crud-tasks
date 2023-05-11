@@ -94,6 +94,31 @@ export const routes = [
 
       return res.writeHead(200).end()
     }
+  },
+  {
+    method: 'POST',
+    path: buildRouteParams('/tasks-csv'),
+    handler: (req,  res) => {
+      
+    //   const message = database.validationKey(req.body, [ 'title', 'description' ])
+      
+    //   if(message) {
+    //     return res.writeHead(400).end(JSON.stringify({message}))
+    //   }
+
+    //   const { title, description } = req.body
+
+    //   const task = {
+    //     id: randomUUID(),
+    //     title,
+    //     description,
+    //     created_at: new Date().toISOString().toString(),
+    //   }
+
+    //  database.insert('tasks', task)
+
+      return res.writeHead(201).end()
+    }
   }
 
 ]
