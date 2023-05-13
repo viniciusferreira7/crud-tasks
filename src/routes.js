@@ -100,22 +100,16 @@ export const routes = [
     path: buildRouteParams('/tasks-csv'),
     handler: (req,  res) => {
       
-    //   const message = database.validationKey(req.body, [ 'title', 'description' ])
-      
-    //   if(message) {
-    //     return res.writeHead(400).end(JSON.stringify({message}))
-    //   }
+    req.csv.map(({ title, description }) => {
+        const task = {
+          id: randomUUID(),
+          title,
+          description,
+          created_at: new Date().toISOString().toString(),
+        }
 
-    //   const { title, description } = req.body
-
-    //   const task = {
-    //     id: randomUUID(),
-    //     title,
-    //     description,
-    //     created_at: new Date().toISOString().toString(),
-    //   }
-
-    //  database.insert('tasks', task)
+         database.insert('tasks', task)
+    })
 
       return res.writeHead(201).end()
     }

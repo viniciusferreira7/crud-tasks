@@ -21,11 +21,18 @@ export class Database {
   insert(table, data){
 
     if(Array.isArray(this.#database[table])){
-      this.#database[table].push(data)
+      if(Array.isArray(data)){
+        this.#database[table].concat(data)
+
+      } else {
+        this.#database[table].push(data)
+      }
 
     } else {
       this.#database[table] = [data]
     }
+
+    console.log(this.#database[table])
 
     this.#persist()
   }

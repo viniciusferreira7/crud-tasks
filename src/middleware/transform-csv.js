@@ -1,4 +1,4 @@
-import { parse } from 'csv-parse'
+import { parse, CsvError } from 'csv-parse'
 
 export async function transformCSV(req, res){
   let buffer = []
@@ -11,7 +11,7 @@ export async function transformCSV(req, res){
   let tasks = []
 
   const csv = Buffer.concat(buffer).toString()
- const parser =  parse(csv, {
+  const parser =  parse(csv, {
     trim: true,
     columns: true,
   })
@@ -21,9 +21,9 @@ export async function transformCSV(req, res){
   }
 
   try {
-    req.body = tasks
+    req.csv = tasks
   } catch {
-    req.body = null
+    req.csv = null
   }
 
   return res.setHeader('Content-Type', 'text/html')

@@ -20,8 +20,6 @@ const server = http.createServer( async (req, res) => {
   const isTaskCSV = url.match(route.path)[0] === '/tasks-csv'
 
    if(route) {
-    console.log(req.body)
-    console.log(route)
     const routeParams = url.match(route.path)
 
     const {query, ...params} = {...routeParams.groups}
