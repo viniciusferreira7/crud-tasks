@@ -100,7 +100,8 @@ export const routes = [
     path: buildRouteParams('/tasks-csv'),
     handler: (req,  res) => {
       
-    req.csv.map(({ title, description }) => {
+      req.csv.map(({title, description }) => {
+
         const task = {
           id: randomUUID(),
           title,
@@ -109,7 +110,7 @@ export const routes = [
         }
 
          database.insert('tasks', task)
-    })
+      })
 
       return res.writeHead(201).end()
     }
